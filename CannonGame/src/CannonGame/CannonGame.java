@@ -14,8 +14,7 @@ public class CannonGame extends PApplet{
 	
 	//initialize things
 	public void setup() {
-		
-		
+		b = new SquareBall(new PVector(width/2, height/2), PVector.random2D(), 1, 50);
 	}
 	
 	//called every frame
