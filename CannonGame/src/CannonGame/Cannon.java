@@ -2,6 +2,7 @@ package CannonGame;
 
 import processing.core.PVector;
 
+
 public class Cannon {
 	PVector position;
 	
@@ -21,7 +22,6 @@ public class Cannon {
 	void update() {
 		move();
 		show();
-		
 	}
 	
 	//moving the cannon and barrel
