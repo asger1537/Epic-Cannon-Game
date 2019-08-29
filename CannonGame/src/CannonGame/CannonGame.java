@@ -5,6 +5,9 @@ import processing.core.*;
 public class CannonGame extends PApplet{
 	public static CannonGame applet;
 	SquareBall b;
+	PVector wind;
+	PVector gravity;
+	
 	public static void main(String[] args) {
 		PApplet.main("CannonGame.CannonGame");
 	}
@@ -19,12 +22,17 @@ public class CannonGame extends PApplet{
 	
 	//initialize things
 	public void setup() {
-		b = new SquareBall(new PVector(width/2, height/2), PVector.random2D(), applet.random(PI * 2), 4, 1, 50);
+		b = new SquareBall(new PVector(width/2, height/2), PVector.random2D(),
+		 random(PI * 2), PI/20, 1, 50);
+		wind = new PVector(0.05f, 0);
+		gravity = new PVector(0, 0.98f);
 	}
 	
 	//called every frame
 	public void draw() {
 		background(180);
 		b.update();
+		b.applyForce(wind);
+		b.applyForce(gravity);
 	}
 }
