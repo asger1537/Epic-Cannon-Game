@@ -74,7 +74,7 @@ public class SquareBall {
         applet.line(corners[2].x, corners[2].y, corners[3].x, corners[3].y);
         applet.line(corners[3].x, corners[3].y, corners[0].x, corners[0].y);
     } 
-
+		//todo change to use Terrain class
     public void checkEdgeCollision(){
         //reversing x-component of velocity vector if there is edge collision to the right or left
         //same goes for y-component with up/down edge collision
