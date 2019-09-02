@@ -1,14 +1,15 @@
 package CannonGame;
+import processing.core.PConstants;
 import processing.core.PVector;
 import static CannonGame.CannonGame.applet;
 
 public class SquareBall {
     
-    PVector position, velocity, acceleration;
+    PVector position, velocity, acceleration, squareDraw_1, squareDraw_2, squareCorner_1, squareCorner_2, squareCorner_3, squareCorner_4;
     float angle, aVelocity, aAcceleration;
     float size, mass;
     
-    SquareBall(PVector position, PVector velocity, float angle, float aVelocity, 
+    SquareBall(PVector position, PVector velocity, PVector squareDraw_1, PVector squareDraw_2, float angle, float aVelocity, 
     float mass, float size){
         this.position = position;
         this.velocity = velocity;
@@ -18,11 +19,14 @@ public class SquareBall {
         this.aVelocity = aVelocity;
         this.aAcceleration = 0;
 
-        this.size = size;
         this.mass = mass;
+        this.squareDraw_1 = squareDraw_1;
+        this.squareDraw_2 = squareDraw_2;
+        
     }
 
     void update(){
+        
         show();
         move();
         applyAirResistance();
@@ -51,11 +55,18 @@ public class SquareBall {
     }
 
     public void show(){
-        //applet.rectMode(3);//center rect mode
+
+      //  applet.rectMode(3);//center rect mode
         applet.translate(position.x, position.y);
-        applet.rotate(angle);
-        applet.rectMode(3);
-        applet.rect(0, 0, size, size);
+        applet.beginShape();
+        applet.vertex(squareDraw_1.x,squareDraw_1.y);
+        applet.vertex(squareDraw_2.x,squareDraw_2.y);
+        applet.vertex(-squareDraw_1.x,-squareDraw_1.y);
+        applet.vertex(-squareDraw_2.x,-squareDraw_2.y);
+        applet.endShape(2);
+        squareDraw_1.rotate(PConstants.PI/180);
+        squareDraw_2.rotate(PConstants.PI/180);
+        //applet.rect(0, 0, size, size);
 
     } 
 
@@ -64,21 +75,21 @@ public class SquareBall {
         //same goes for y-component with up/down edge collision
         //the position is set to be size/2 away from edge to avoid getting stuck on the wrong
         //side of the edge
-        if (position.x > applet.width-size/2){
+        if (position.x > applet.width-size){
             velocity.x *= -.7;
-            position.x = applet.width-size/2;
+            position.x = applet.width-size;
         }
-        if (position.x < size/2){
+        if (position.x < size){
             velocity.x *= -.7;
-            position.x = size/2;
+            position.x = size;
         }
-        if (position.y > applet.height-size/2){
+        if (position.y > applet.height-size){
             velocity.y *= -.7;
-            position.y = applet.height-size/2;
+            position.y = applet.height-size;
         }
-        if (position.y < size/2){
+        if (position.y < size){
             velocity.y *= -.7;
-            position.y = size/2;
+            position.y = size;
         }
     }
 }

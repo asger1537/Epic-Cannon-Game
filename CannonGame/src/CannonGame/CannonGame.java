@@ -1,6 +1,7 @@
 package CannonGame;
 
 import processing.core.*;
+import processing.awt.*;
 
 public class CannonGame extends PApplet{
 	public static CannonGame applet;
@@ -23,7 +24,7 @@ public class CannonGame extends PApplet{
 	//initialize things
 	public void setup() {
 		b = new SquareBall(new PVector(width/2, height/2), PVector.random2D(),
-		 random(PI * 2), PI/20, 1, 50);
+		  new PVector(25,25), new PVector(25,-25), random(PI * 2), PI/20, 1f, 25 );
 		wind = new PVector(0.05f, 0);
 		gravity = new PVector(0, 0.98f);
 	}
