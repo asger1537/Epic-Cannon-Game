@@ -14,7 +14,6 @@ public class Cannon {
 	float angle;
 	float movementSpeed;
 	float barrelLength;
-
 	float barrelWidth;
 	float wheelRadius;
 	float wheelCount;
@@ -27,8 +26,8 @@ public class Cannon {
 		this.wheelRadius = 30f;
 		this.barrelWidth = 20f;
 		this.position = position;
-		this.angle = a;
-		this.angleVelocity = 0.1f;
+		this.angle = angle;
+		this.angleVelocity = -PConstants.PI/36;
 		this.movementSpeed = 5f;
 		this.barrelLength = 100f;
 		this.barrel = new PVector(100, 0);
@@ -52,12 +51,14 @@ public class Cannon {
 		angle += PConstants.PI / 180;
 		applet.pushMatrix();
 		applet.translate(position.x, position.y - 30);
-		// applet.rotate(-PConstants.PI/((180)/a));
+		 applet.rotate(-PConstants.PI/((180)/a));
 		applet.pushMatrix();
-		barrel.rotate(angle);
+		//barrel.rotate(angle);
 		applet.beginShape();
-		//applet.vertex();
+		//applet.vertex(0+);
 		applet.endShape(2);
+		applet.line(0,0,barrel.x,barrel.y);
+		barrel.rotate(angleVelocity);
 		applet.rect(barrelLength / 2, 0, barrelLength, barrelWidth);
 		applet.popMatrix();
 
@@ -77,7 +78,6 @@ public class Cannon {
 		applet.vertex(-100, 5);
 		applet.vertex(-150, 55);
 		applet.endShape(2);
-		applet.rect(0, -10, 100, 30);
 
 		// println((atan(barrel.x/barrel.y))/PI*180);
 		applet.popMatrix();

@@ -36,10 +36,10 @@ public class CannonGame extends PApplet{
 	//called every frame
 	public void draw() {
 		background(180);
-		terrain.displayTerrain();
+		//terrain.displayTerrain();
 		c.update();
-		b.update();
+		//b.update();
 		//b.applyForce(wind);
-		b.applyForce(gravity);
+		//b.applyForce(gravity);
 	}
 }
