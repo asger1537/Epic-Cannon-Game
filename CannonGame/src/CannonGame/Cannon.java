@@ -1,5 +1,7 @@
 package CannonGame;
 
+import java.util.ArrayList;
+
 import processing.core.PConstants;
 import processing.core.PVector;
 import static CannonGame.CannonGame.applet;
@@ -8,16 +10,21 @@ public class Cannon {
 	PVector position;
 	PVector barrel;
 
+	PVector position;	
 	float angleVelocity;
 	float angle;
 	float movementSpeed;
 	float barrelLength;
+
 	float barrelWidth;
 	float wheelRadius;
 	float wheelCount;
 	float a;
 
 	Cannon(PVector position) {
+	ArrayList <SquareBall> squareBalls;
+	
+	Cannon(PVector position){
 		this.wheelCount = 5;
 		this.wheelRadius = 30f;
 		this.barrelWidth = 20f;
@@ -27,6 +34,8 @@ public class Cannon {
 		this.movementSpeed = 5f;
 		this.barrelLength = 100f;
 		this.barrel = new PVector(100, 0);
+
+		squareBalls = new ArrayList();
 	}
 
 	void update() {
@@ -79,7 +88,8 @@ public class Cannon {
 	}
 
 	void shoot() {
-
+		squareBalls.add(new SquareBall(position, velocity, angle, aVelocity, 
+		mass, size));
 	}
 
 }
