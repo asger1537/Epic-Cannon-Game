@@ -20,34 +20,34 @@ Terrain()
 void generate()
 {
 	int[] heightmap = new int[tWidth]; 
-	// left terrain point
+	// left terrain point 
 	heightmap[0]= (int)applet.random(tHeight);
 	// right terrain point 
 	heightmap[tWidth-1]= (int)applet.random(tHeight);
 	// make a queue
 	Queue<Integer> q = new LinkedList<>();
 
-// add first segment (left and right terrain point)	
+// add first segment (left and right x terrain point)	
 q.add(0);
 q.add(tWidth-1);
 //generates terrain until distance between points is not divisable by 2
 while(!q.isEmpty())
 	{
-		// set x0 to 0 and remove 0 from queue
+		// set x0 to first in queue and remove from queue
 		int x0 = q.remove();
-		// set x1 to tWidth-1 and remove it from the queue
+		// set x1 to first in queue and remove it from the queue
 		int x1 = q.remove();
-		// the mid point (x) is avearge of the two points
+		// the x-coord for mid point is avearge of the two points
 		int mid = (x0 + x1)/2;
-		// the y coord for mid point is avearge of left and right point +- offset
+		// the y-coord for mid point is avearge of left and right  y-coord point + a random offset
 		heightmap[mid] =(int)((heightmap[x0]+heightmap[x1])/2+applet.random(-offset,offset));
 		//continue if divisable by 2
 		if(x1-mid > 1)
 		{
-			// add the next 2 segments made of the middle point and the left/right terrain point
+			// add the left segment (made up of the middle point as the "new" right point)
 			q.add(x0);
 			q.add(mid);
-			
+			// add the right segment (made up of the middle point as the "new" left point)
 			q.add(mid);
 			q.add(x1);
 		}
