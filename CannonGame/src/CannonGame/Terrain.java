@@ -2,22 +2,23 @@ package CannonGame;
 import java.util.LinkedList; 
 import java.util.Queue; 
 import processing.core.PVector;
+import processing.core.*;
 
+/*
+public class Terrain {
 
-public class Terrain{
-int height = height;
-int width = width;
-int offset = height/4; 
+int width = applet.width;
+int offset = applet.height/4; 
 
-Terrain(int width){
+Terrain(int width) {
 	this.width = width;
 	this.height = height;
-	heightmap = new ArrayList<int>(width);
+	heightmap = new ArrayList<width>();
 }	
 
 void generate()
 {
-Queue<Integer> q = new LinkedList<>();
+Queue<Integer> q = new LinkedList<>;
 
 q.add(0);
 q.add(width-1);
@@ -41,3 +42,4 @@ boolean checkCollision(SquareBall squareball)
 	return false;
 //todo 
 }
+*/
