@@ -1,15 +1,17 @@
 package CannonGame;
 
+import java.util.ArrayList;
+
 import processing.core.PVector;
 
 
 public class Cannon {
-	PVector position;
-	
+	PVector position;	
 	float angleVelocity;
 	float angle;
 	float movementSpeed;
 	float barrelLength;
+
 	
 	Cannon(PVector position){
 		this.position = position;

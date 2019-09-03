@@ -23,6 +23,7 @@ public class CannonGame extends PApplet{
 	
 	//initialize things
 	public void setup() {
+		frameRate(10);
 		b = new SquareBall(new PVector(width/2, height/2), PVector.random2D(), random(PI * 2), PI/20, 1f, 25 );
 		wind = new PVector(0.05f, 0);
 		gravity = new PVector(0, 0.98f);
@@ -32,7 +33,7 @@ public class CannonGame extends PApplet{
 	public void draw() {
 		background(180);
 		b.update();
-		b.applyForce(wind);
+		//b.applyForce(wind);
 		b.applyForce(gravity);
 	}
 }
