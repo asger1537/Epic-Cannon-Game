@@ -8,7 +8,6 @@ public class CannonGame extends PApplet{
 	SquareBall b;
 	PVector wind;
 	PVector gravity;
-	
 	public static void main(String[] args) {
 		PApplet.main("CannonGame.CannonGame");
 	}
