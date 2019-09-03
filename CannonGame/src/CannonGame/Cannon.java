@@ -7,7 +7,6 @@ import processing.core.PVector;
 import static CannonGame.CannonGame.applet;
 
 public class Cannon {
-	PVector position;
 	PVector barrel;
 
 	PVector position;	
@@ -24,7 +23,6 @@ public class Cannon {
 	Cannon(PVector position) {
 	ArrayList <SquareBall> squareBalls;
 	
-	Cannon(PVector position){
 		this.wheelCount = 5;
 		this.wheelRadius = 30f;
 		this.barrelWidth = 20f;
@@ -58,7 +56,7 @@ public class Cannon {
 		applet.pushMatrix();
 		barrel.rotate(angle);
 		applet.beginShape();
-		applet.vertex();
+		//applet.vertex();
 		applet.endShape(2);
 		applet.rect(barrelLength / 2, 0, barrelLength, barrelWidth);
 		applet.popMatrix();
