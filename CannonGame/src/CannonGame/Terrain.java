@@ -46,7 +46,7 @@ void displayTerrain()
 {
 for(int i = 0; i < tWidth-1; i++)
 	{
-	applet.line(i,0,i,heightmap[i]);
+	applet.line(i,applet.height,i,heightmap[i]);
 	applet.line(i, heightmap[i],i+1, heightmap[i+1]);	
 	}
 }

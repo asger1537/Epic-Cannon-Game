@@ -10,6 +10,7 @@ public class CannonGame extends PApplet{
 	Cannon c;
 	PVector wind;
 	PVector gravity;
+	Terrain terrain;
 	public static void main(String[] args) {
 		PApplet.main("CannonGame.CannonGame");
 	}
@@ -28,11 +29,14 @@ public class CannonGame extends PApplet{
 		b = new SquareBall(new PVector(width/2, height/2), PVector.random2D(), random(PI * 2), PI/20, 1f, 25 );
 		wind = new PVector(0.05f, 0);
 		gravity = new PVector(0, 0.98f);
+		terrain = new Terrain();
+		terrain.generate();
 	}
 	
 	//called every frame
 	public void draw() {
 		background(180);
+		terrain.displayTerrain();
 		c.update();
 		b.update();
 		b.applyForce(wind);
