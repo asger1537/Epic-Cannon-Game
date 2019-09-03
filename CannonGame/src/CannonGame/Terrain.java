@@ -1,48 +1,42 @@
 package CannonGame;
 import java.util.LinkedList; 
 import java.util.Queue; 
-import static CannonGame.CannonGame.applet;
+import processing.core.PVector;
+
 
 public class Terrain{
-int tHeight;
-int tWidth;
-int offset; 
-int[] heightmap;
+int height = height;
+int width = width;
+int offset = height/4; 
 
-Terrain()
-{
-	this.tWidth = applet.width;
-	this.tHeight = applet.height;
-	this.offset = applet.height/4;
+Terrain(int width){
+	this.width = width;
+	this.height = height;
+	heightmap = new ArrayList<int>(width);
 }	
 
 void generate()
 {
-	int[] heightmap = new int[tWidth]; 
-	heightmap[0]= (int)applet.random(tHeight);
-	heightmap[tWidth-1]= (int)applet.random(tHeight);
-	Queue<Integer> q = new LinkedList<>();
+Queue<Integer> q = new LinkedList<>();
 
 q.add(0);
-q.add(tWidth-1);
+q.add(width-1);
 while(!q.isEmpty())
 	{
 		int x0 = q.remove();
 		int x1 = q.remove();
 		int mid = (x0 + x1)/2;
-		heightmap[mid] =(int)((heightmap[x0]+heightmap[x1])/2+applet.random(-offset,offset));
+		heightmap[mid] = (heightmap[x0] + heightmap[x1])/2+random(-offset,offset);
 		if(x1-mid > 1)
 		{
 			q.add(x0);
 			q.add(mid);
-
 			q.add(mid);
 			q.add(x1);
 		}
 	}
 }
 
-void displayTerrain()
 {
 for(int i = 0; i < tWidth-1; i++)
 	{
@@ -50,4 +44,6 @@ for(int i = 0; i < tWidth-1; i++)
 	applet.line(i, heightmap[i],i+1, heightmap[i+1]);	
 	}
 }
+boolean checkCollision(SquareBall squareball)
+//todo 
 }

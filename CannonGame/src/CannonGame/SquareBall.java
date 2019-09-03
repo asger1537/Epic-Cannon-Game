@@ -27,11 +27,12 @@ public class SquareBall {
     }
 
     void update(){    
-        show();
         move();
         updateCorners();
         applyAirResistance();
         checkEdgeCollision();
+        updateCorners();
+        show();
     }
 
     //using newton's second law: F = m*a -> a = F/m
@@ -68,45 +69,63 @@ public class SquareBall {
     }
 
     public void show(){
-        //drawing lines clockwise
-        applet.line(corners[0].x, corners[0].y, corners[1].x, corners[1].y);
-        applet.line(corners[1].x, corners[1].y, corners[2].x, corners[2].y);
-        applet.line(corners[2].x, corners[2].y, corners[3].x, corners[3].y);
-        applet.line(corners[3].x, corners[3].y, corners[0].x, corners[0].y);
+        applet.beginShape();
+        for (PVector c : corners){
+            applet.vertex(c.x, c.y);
+        }
+        applet.endShape(2);
     } 
 		//todo change to use Terrain class
     public void checkEdgeCollision(){
-        //reversing x-component of velocity vector if there is edge collision to the right or left
-        //same goes for y-component with up/down edge collision
-        //the position is set to be size/2 away from edge to avoid getting stuck on the wrong
-        //side of the edge
-        boolean xCollision = false;
-        boolean yCollision = false;
+        int xCollisions = 0;
+        int yCollisions = 0;
+
+        float velocityMultiplier = 0.5f;
         for (PVector c : corners){
-            if (c.x > applet.width && !xCollision){
-                xCollision = true;
-                position.x -= c.x-applet.width;
-                velocity.x *= -0.7;
-                aVelocity *= -0.8;
+            if (c.x > applet.width){
+                applet.println("right collision");
+                xCollisions++;
+                if (xCollisions == 1){
+                    position.x -= c.x-applet.width;
+                    velocity.x *= -velocityMultiplier;
+                    aVelocity *= -0.8;
+                }
             }
-            if (c.x < 0 && !xCollision){
-                xCollision = true;
-                position.x -= c.x;
-                position.x *= -0.7;
-                aVelocity *= -0.8;
+            if (c.x < 0){
+                xCollisions++;
+                applet.println("left collision");
+                if (xCollisions == 1){
+                    position.x -= c.x;
+                    velocity.x *= -velocityMultiplier;
+                    aVelocity *= -0.3;
+                }
             }
-            if (c.y > applet.height && !yCollision){
-                yCollision = true;
-                position.y -= c.y-applet.width;
-                velocity.y *= -0.7;
-                aVelocity *= -0.8;
+            if (c.y >= applet.height){
+                yCollisions++;
+                applet.println("bottom collision");
+                if (yCollisions == 1){
+                    position.y -= c.y-applet.width;
+                    velocity.y *= -velocityMultiplier;
+                    aVelocity +=(c.x-position.x)/50f;
+                    aVelocity *= -0.3;
+                    velocity.x *= 0.5;
+                }
             }
-            if (c.y < 0 && !yCollision){
-                yCollision = true;
-                position.y -= c.y;
-                position.y *= -1;
-                aVelocity *= -0.8;
+            if (c.y < 0){
+                applet.println("top collision");
+                if (yCollisions == 1){
+                    yCollisions++;
+                    position.y -= c.y;
+                    velocity.y *= -velocityMultiplier;
+                    aVelocity *= -1;
+                    velocity.x *= 0.5;
+                }
             }
+
+            applet.println("x", xCollision);
+            applet.println("y", yCollision);
+            applet.println(aVelocity);
+            //applet.println(velocity.x, velocity.y);
         }
     }
 }
