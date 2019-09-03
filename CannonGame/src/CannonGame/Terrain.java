@@ -4,7 +4,6 @@ import java.util.Queue;
 import processing.core.PVector;
 import processing.core.*;
 
-/*
 public class Terrain {
 
 int width = applet.width;
@@ -48,4 +47,3 @@ for(int i = 0; i < tWidth-1; i++)
 boolean checkCollision(SquareBall squareball)
 //todo 
 }
-*/
