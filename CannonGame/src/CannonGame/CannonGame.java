@@ -11,6 +11,7 @@ public class CannonGame extends PApplet{
 	PVector wind;
 	PVector gravity;
 	Button[] buttons;
+	Terrain terrain;
 	public static void main(String[] args) {
 		PApplet.main("CannonGame.CannonGame");
 	}
@@ -31,15 +32,18 @@ public class CannonGame extends PApplet{
 		wind = new PVector(0.05f, 0);
 		gravity = new PVector(0, 0.98f);
 		buttons = new Button[5];
+		terrain = new Terrain();
+		terrain.generate();
 	}
 	
 	//called every frame
 	public void draw() {
 		background(180);
+		//terrain.displayTerrain();
 		c.update();
-		b.update();
+		//b.update();
 		//b.applyForce(wind);
-		b.applyForce(gravity);
+		//b.applyForce(gravity);
 	}
 
 	public void keyPressed(){
