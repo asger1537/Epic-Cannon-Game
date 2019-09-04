@@ -53,6 +53,9 @@ public class Cannon {
 	void show() {
 		angle += angleVelocity;
 		applet.pushMatrix();
+		
+		// make tank small
+		applet.scale(0.33f);
 		//Translates the center of the grid to position of tank
 		applet.translate(position.x, position.y - 30);
 		// Rotates tank in its entirety including barrel
@@ -88,4 +91,8 @@ public class Cannon {
 		squareBalls.add(new SquareBall(PVector.add(position, barrel), 10, angle, 0, 1, 20));
 	}
 
+	float getAngleFromTerrain(Terrain terrain)
+	{
+		//fra min x til tanklængde find maksimal hældning
+	}
 }

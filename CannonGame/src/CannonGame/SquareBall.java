@@ -78,7 +78,7 @@ public class SquareBall {
         }
         applet.endShape(2);
     } 
-		//todo change to use Terrain class
+		
     public void checkEdgeCollision(){
         int xCollisions = 0;
         int yCollisions = 0;
