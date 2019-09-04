@@ -10,6 +10,7 @@ public class CannonGame extends PApplet{
 	Cannon c;
 	PVector wind;
 	PVector gravity;
+	Button[] buttons;
 	public static void main(String[] args) {
 		PApplet.main("CannonGame.CannonGame");
 	}
@@ -24,14 +25,12 @@ public class CannonGame extends PApplet{
 	
 	//initialize things
 	public void setup() {
-<<<<<<< HEAD
 		frameRate(10);
-=======
 		c = new Cannon(new PVector(width/2f,height/2f));
->>>>>>> 28100d2c3625fa102f13a095aba944a985cfa01d
 		b = new SquareBall(new PVector(width/2, height/2), PVector.random2D(), random(PI * 2), PI/20, 1f, 25 );
 		wind = new PVector(0.05f, 0);
 		gravity = new PVector(0, 0.98f);
+		buttons = new Button[5];
 	}
 	
 	//called every frame
@@ -42,4 +41,14 @@ public class CannonGame extends PApplet{
 		//b.applyForce(wind);
 		b.applyForce(gravity);
 	}
+
+	public void keyPressed(){
+		if (key == ' '){
+			c.shoot();
+		}	
+	}
+
+	public void mouseClicked(){
+        
+    }
 }
