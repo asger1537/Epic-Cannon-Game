@@ -22,7 +22,6 @@ void generate()
 	int[] heightmap = new int[tWidth]; 
 	heightmap[0]= (int)applet.random(tHeight);
 	heightmap[tWidth-1]= (int)applet.random(tHeight);
-	Queue<Integer> q = new LinkedList<>();
 	heightmap = new int[tWidth]; 
 	// left terrain point 
 	heightmap[0]= (int)applet.random(tHeight);
@@ -75,5 +74,5 @@ void displayTerrain()
 	//the line from current terrain point to the next terrain point
 	applet.line(i, heightmap[i],i+1, heightmap[i+1]);	
 	}
-	}
+}
 }
