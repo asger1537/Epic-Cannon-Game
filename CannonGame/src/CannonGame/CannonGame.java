@@ -26,14 +26,14 @@ public class CannonGame extends PApplet{
 	
 	//initialize things
 	public void setup() {
-		frameRate(10);
+		frameRate(60);
 		c = new Cannon(new PVector(width/2f,height/2f));
 		b = new SquareBall(new PVector(width/2, height/2), PVector.random2D(), random(PI * 2), PI/20, 1f, 25 );
 		wind = new PVector(0.05f, 0);
 		gravity = new PVector(0, 0.98f);
 		buttons = new Button[5];
 		terrain = new Terrain();
-		terrain.generate();
+		//terrain.generate();
 	}
 	
 	//called every frame
