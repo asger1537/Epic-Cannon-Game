@@ -10,11 +10,11 @@ public class SquareBall {
     float angle, aVelocity, aAcceleration;
     float size, mass;
     
-    SquareBall(PVector position, PVector velocity, float angle, float aVelocity, 
+    SquareBall(PVector position, float speed, float angle, float aVelocity, 
     float mass, float size){
         this.position = position;
         this.pPosition = new PVector();
-        this.velocity = velocity;
+        this.velocity = new PVector(1, 0).rotate(angle).mult(speed);
         this.acceleration = new PVector();
 
         this.angle = angle;
@@ -129,8 +129,8 @@ public class SquareBall {
                     velocity.x *= 0.5;
                 }
             }
-            applet.println(pPosition.y == position.y);
-            applet.println(position.x, position.y);
+            //applet.println(pPosition.y == position.y);
+            //applet.println(position.x, position.y);
         }
     }
 }

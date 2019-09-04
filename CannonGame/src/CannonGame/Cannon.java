@@ -37,6 +37,11 @@ public class Cannon {
 	void update() {
 		move();
 		show();
+		for (int i = 0; i < squareBalls.size(); i++){
+			SquareBall sb = squareBalls.get(i);
+			sb.update();
+			sb.applyForce(applet.gravity);
+		}
 	}
 
 	// moving the cannon and barrel
@@ -74,12 +79,13 @@ public class Cannon {
 		applet.endShape(2);
 		applet.popMatrix();
 		// printing for testing-purposes
-		applet.println(angle);
-		applet.println(barrel);
+		//applet.println(angle);
+		//applet.println(barrel);
 	}
 
 	void shoot() {
-		squareBalls.add(new SquareBall(position, velocity, angle, aVelocity, mass, size));
+		applet.println("shoot");
+		squareBalls.add(new SquareBall(PVector.add(position, barrel), 10, angle, 0, 1, 20));
 	}
 
 }

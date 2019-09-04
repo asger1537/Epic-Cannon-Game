@@ -1,3 +1,5 @@
+package CannonGame;
+
 import static CannonGame.CannonGame.applet;
 
 class Button{
