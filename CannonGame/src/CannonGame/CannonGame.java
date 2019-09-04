@@ -19,7 +19,7 @@ public class CannonGame extends PApplet{
 	//only the window size needs to be set here
 	public void settings() {
 		//for testing purposes the size can be used, but otherwise use fullscreen
-		size(800, 800);
+		size(1025, 800);
 		applet = this;
 		//fullScreen();
 	}
@@ -33,13 +33,13 @@ public class CannonGame extends PApplet{
 		gravity = new PVector(0, 0.98f);
 		buttons = new Button[5];
 		terrain = new Terrain();
-		//terrain.generate();
+		terrain.generate();
 	}
 	
 	//called every frame
 	public void draw() {
 		background(180);
-		//terrain.displayTerrain();
+		terrain.displayTerrain();
 		c.update();
 		//b.update();
 		//b.applyForce(wind);

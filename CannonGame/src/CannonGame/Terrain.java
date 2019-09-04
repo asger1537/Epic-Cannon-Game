@@ -19,9 +19,9 @@ Terrain()
 
 void generate()
 {
-	int[] heightmap = new int[tWidth]; 
-	heightmap[0]= (int)applet.random(tHeight);
-	heightmap[tWidth-1]= (int)applet.random(tHeight);
+	heightmap = new int[tWidth]; 
+	heightmap[0]= (int)(offset*2 + applet.random(tHeight*0.25f));
+	heightmap[tWidth-1]= (int)(offset*2 + applet.random(tHeight*0.25f));
 	heightmap = new int[tWidth]; 
 	// left terrain point 
 	heightmap[0]= (int)applet.random(tHeight);
@@ -64,15 +64,48 @@ while(!q.isEmpty())
 	}
 }
 
-void displayTerrain()
-{
-	//loop through length of array
-	for(int i = 0; i < heightmap.length-1; i++)
+	void displayTerrain()
 	{
-	//the vertical line from the botoom of the screen to the current terrain point
-	applet.line(i,applet.height,i,heightmap[i]);
-	//the line from current terrain point to the next terrain point
-	applet.line(i, heightmap[i],i+1, heightmap[i+1]);	
+		//loop through length of array
+		for(int i = 0; i < heightmap.length-1; i++)
+		{
+		//the vertical line from the botoom of the screen to the current terrain point
+		applet.line(i,applet.height,i,heightmap[i]);
+		//the line from current terrain point to the next terrain point
+		applet.line(i, heightmap[i],i+1, heightmap[i+1]);	
+		}
 	}
-}
+
+	boolean terrainCollisionSquare(SquareBall squareBall)
+	{
+		float midX = (squareBall.corners[0].x+squareBall.corners[2].x)/2;
+		float midY = (squareBall.corners[0].y+squareBall.corners[2].y)/2;
+		float diameter = (float)Math.sqrt(2*squareBall.size*squareBall.size);
+
+		float maxY = midY+diameter/2;
+
+		int minX = (int)Math.floor(midX-diameter/2);
+		int maxX = (int)Math.ceil(midX+diameter/2);
+
+		for(int x=minX; x <= maxX; ++x)
+		{
+			//skip if x outside screen
+			if(x < 0 || x >= heightmap.length) continue;
+			int y = heightmap[x];
+
+			//skip if below lowest point
+			if(y > maxY) continue; 
+
+			float dx = x-midX;
+			float dy = y-midY;	
+			// if dist lower than radius then there is collision
+			float dist = (float)Math.sqrt(dx*dx+dy*dy);
+			if(dist <= diameter/2)
+			{
+				return true;
+			}
+		}
+		//no collision between minX and maxX
+		return false;
+	}
 }
