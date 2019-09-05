@@ -1,17 +1,16 @@
 package CannonGame;
 
-//import static CannonGame.CannonGame.applet;
+import static CannonGame.CannonGame.applet;
 
 public class Input{
-    public static void test(){
-        System.out.println("test");
-    }
-
-    void keyPressed(){
-        //applet.println("key pressed");
+    //instead of having all input in main this class is used just to make the main class cleaner
+    public static void keyPressed(){
+        if (applet.key == ' '){//space
+            applet.c.shoot();
+        }
     }
     
-     void mouseClicked(){
+    public static void mouseClicked(){
         //applet.println("mouse clicked");
     }    
 
