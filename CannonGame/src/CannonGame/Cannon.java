@@ -9,26 +9,24 @@ import static CannonGame.CannonGame.applet;
 public class Cannon {
 	PVector barrel;
 
-	PVector position;	
+	PVector position;
 	float angleVelocity;
 	float angle;
 	float movementSpeed;
 	float barrelLength;
-
 	float barrelWidth;
 	float wheelRadius;
 	float wheelCount;
 	float a;
+	ArrayList<SquareBall> squareBalls;
 
 	Cannon(PVector position) {
-	ArrayList <SquareBall> squareBalls;
-	
 		this.wheelCount = 5;
 		this.wheelRadius = 30f;
 		this.barrelWidth = 20f;
 		this.position = position;
-		this.angle = a;
-		this.angleVelocity = 0.1f;
+		this.angle = angle;
+		this.angleVelocity = -PConstants.PI / 180;
 		this.movementSpeed = 5f;
 		this.barrelLength = 100f;
 		this.barrel = new PVector(100, 0);
@@ -39,6 +37,11 @@ public class Cannon {
 	void update() {
 		move();
 		show();
+		for (int i = 0; i < squareBalls.size(); i++){
+			SquareBall sb = squareBalls.get(i);
+			sb.update();
+			sb.applyForce(applet.gravity);
+		}
 	}
 
 	// moving the cannon and barrel
@@ -48,22 +51,23 @@ public class Cannon {
 
 	// drawing the cannon - i.e the barrel, wheels and maybe some extra
 	void show() {
-		a++;
-		angle += PConstants.PI / 180;
+		angle += angleVelocity;
 		applet.pushMatrix();
+		
+		// make tank small
+		applet.scale(0.33f);
+		//Translates the center of the grid to position of tank
 		applet.translate(position.x, position.y - 30);
-		// applet.rotate(-PConstants.PI/((180)/a));
-		applet.pushMatrix();
-		barrel.rotate(angle);
-		applet.beginShape();
-		//applet.vertex();
-		applet.endShape(2);
-		applet.rect(barrelLength / 2, 0, barrelLength, barrelWidth);
-		applet.popMatrix();
-
+		// Rotates tank in its entirety including barrel
+		applet.rotate(angle);
+		applet.line(0, 0, barrel.x, barrel.y);
+		//rotates PVector describing direction of barrel
+		barrel.rotate(angleVelocity);
+		// for-loop draws wheels of tank
 		for (int i = 0; i < wheelCount; i++) {
 			applet.ellipse(wheelRadius * 2 * i - 4 * wheelRadius, 55 + wheelRadius, wheelRadius * 2, wheelRadius * 2);
 		}
+		//The vertices draw the shape of the tank
 		applet.beginShape();
 		applet.vertex(-5 * wheelRadius, 55 + wheelRadius);
 		applet.vertex(5 * wheelRadius, 55 + wheelRadius);
@@ -73,21 +77,22 @@ public class Cannon {
 		applet.vertex(50, -15);
 		applet.vertex(-50, -15);
 		applet.vertex(-50, 5);
-
 		applet.vertex(-100, 5);
 		applet.vertex(-150, 55);
 		applet.endShape(2);
-		applet.rect(0, -10, 100, 30);
-
-		// println((atan(barrel.x/barrel.y))/PI*180);
 		applet.popMatrix();
-		applet.println(angle);
-		applet.println(barrel);
+		// printing for testing-purposes
+		//applet.println(angle);
+		//applet.println(barrel);
 	}
 
 	void shoot() {
-		squareBalls.add(new SquareBall(position, velocity, angle, aVelocity, 
-		mass, size));
+		applet.println("shoot");
+		squareBalls.add(new SquareBall(PVector.add(position, barrel), 10, angle, 0, 1, 20));
 	}
 
+	float getAngleFromTerrain(Terrain terrain)
+	{
+		//fra min x til tanklængde find maksimal hældning
+	}
 }

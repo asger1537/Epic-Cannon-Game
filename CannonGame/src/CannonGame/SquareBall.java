@@ -5,15 +5,16 @@ import static CannonGame.CannonGame.applet;
 
 public class SquareBall {
     
-    PVector position, velocity, acceleration, squareDraw_1, squareDraw_2, squareCorner_1, squareCorner_2, squareCorner_3, squareCorner_4;
+    PVector position, pPosition,velocity, acceleration;
     PVector[] corners;
     float angle, aVelocity, aAcceleration;
     float size, mass;
     
-    SquareBall(PVector position, PVector velocity, float angle, float aVelocity, 
+    SquareBall(PVector position, float speed, float angle, float aVelocity, 
     float mass, float size){
         this.position = position;
-        this.velocity = velocity;
+        this.pPosition = new PVector();
+        this.velocity = new PVector(1, 0).rotate(angle).mult(speed);
         this.acceleration = new PVector();
 
         this.angle = angle;
@@ -32,7 +33,9 @@ public class SquareBall {
         applyAirResistance();
         checkEdgeCollision();
         updateCorners();
+        pPosition = position;
         show();
+        
     }
 
     //using newton's second law: F = m*a -> a = F/m
@@ -75,13 +78,15 @@ public class SquareBall {
         }
         applet.endShape(2);
     } 
-		//todo change to use Terrain class
+		
     public void checkEdgeCollision(){
         int xCollisions = 0;
         int yCollisions = 0;
 
         float velocityMultiplier = 0.5f;
+        //checks collision with window borders for each corner
         for (PVector c : corners){
+            //collision with right edge of the window
             if (c.x > applet.width){
                 applet.println("right collision");
                 xCollisions++;
@@ -91,6 +96,7 @@ public class SquareBall {
                     aVelocity *= -0.8;
                 }
             }
+            //collision with right edge of the window
             if (c.x < 0){
                 xCollisions++;
                 applet.println("left collision");
@@ -100,9 +106,10 @@ public class SquareBall {
                     aVelocity *= -0.3;
                 }
             }
+            //collision with the bottom of the window
             if (c.y >= applet.height){
                 yCollisions++;
-                applet.println("bottom collision");
+                //applet.println("bottom collision");
                 if (yCollisions == 1){
                     position.y -= c.y-applet.width;
                     velocity.y *= -velocityMultiplier;
@@ -111,6 +118,7 @@ public class SquareBall {
                     velocity.x *= 0.5;
                 }
             }
+            //collision with the top of the window
             if (c.y < 0){
                 applet.println("top collision");
                 if (yCollisions == 1){
@@ -121,11 +129,8 @@ public class SquareBall {
                     velocity.x *= 0.5;
                 }
             }
-
-            applet.println("x", xCollision);
-            applet.println("y", yCollision);
-            applet.println(aVelocity);
-            //applet.println(velocity.x, velocity.y);
+            //applet.println(pPosition.y == position.y);
+            //applet.println(position.x, position.y);
         }
     }
 }
