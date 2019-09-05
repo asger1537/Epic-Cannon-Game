@@ -42,6 +42,7 @@ public class Terrain {
 			int x1 = q.remove();
 			// the x-coord for mid point is avearge of the two points
 			int mid = (x0 + x1) / 2;
+			//hej
 			heightmap[mid] = (int) ((heightmap[x0] + heightmap[x1]) / 2 + applet.random(-offset, offset));
 			// set roughness value to that which was first in queue and remove that which it
 			// was set to from the queue (offset)

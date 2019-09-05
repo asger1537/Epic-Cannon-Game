@@ -62,10 +62,12 @@ public class Cannon {
 		// Rotates tank in its entirety including barrel
 		applet.rotate(barrelAngle);
 		applet.line(0, 0, barrel.x, barrel.y);
+		
 		//rotates PVector describing direction of barrel
 		barrel.rotate(barrelAngleVelocity);
 		// for-loop draws wheels of tank
 		for (int i = 0; i < wheelCount; i++) {
+			applet.fill(55);
 			applet.ellipse(wheelRadius * 2 * i - 4 * wheelRadius, 55 + wheelRadius, wheelRadius * 2, wheelRadius * 2);
 		}
 		//The vertices draw the shape of the tank
@@ -91,10 +93,5 @@ public class Cannon {
 	void shoot() {
 		applet.println("shoot");
 		squareBalls.add(new SquareBall(PVector.add(position, barrel), 10,barrelAngle, 0, 1, 20));
-	}
-
-	float getAngleFromTerrain(Terrain terrain)
-	{
-		//fra min x til tanklængde find maksimal hældning
 	}
 }
