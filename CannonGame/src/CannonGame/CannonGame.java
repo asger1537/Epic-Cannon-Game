@@ -7,10 +7,11 @@ import processing.core.*;
 public class CannonGame extends PApplet{
 	public static CannonGame applet;
 	SquareBall b;
-	Cannon c;
+	public Cannon c;
 	PVector wind;
 	PVector gravity;
 	Button[] buttons;
+	int scene;
 	Terrain terrain;
 	public static void main(String[] args) {
 		PApplet.main("CannonGame.CannonGame");
@@ -32,21 +33,28 @@ public class CannonGame extends PApplet{
 		wind = new PVector(0.05f, 0);
 		gravity = new PVector(0, 0.98f);
 		buttons = new Button[5];
+		scene = 0;
 		terrain = new Terrain();
 		terrain.generate();
 	}
 	
 	//called every frame
 	public void draw() {
-		background(180);
-		terrain.displayTerrain();
+		//System.out.println(frameRate);
+		background(202, 236, 244);
 		c.update();
+		b.update();
+		//b.applyForce(wind);
+		b.applyForce(gravity);
+		terrain.displayTerrain();
+		
 	}
 
+	@Override
 	public void keyPressed(){
-		Input.keyPressed();
+		Input.keyPressed();		
 	}
-
+	@Override
 	public void mouseClicked(){
 		Input.mouseClicked();
     }

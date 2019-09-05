@@ -32,6 +32,7 @@ public class SquareBall {
         updateCorners();
         applyAirResistance();
         checkEdgeCollision();
+        checkTerrainCollision();
         updateCorners();
         pPosition = position;
         show();
@@ -131,6 +132,12 @@ public class SquareBall {
             }
             //applet.println(pPosition.y == position.y);
             //applet.println(position.x, position.y);
+        }
+    }
+
+    public void checkTerrainCollision(){
+        if (applet.terrain.terrainCollisionSquare(this)){
+            
         }
     }
 }
