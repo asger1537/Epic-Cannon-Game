@@ -88,6 +88,7 @@ public class Cannon {
 		// printing for testing-purposes
 		//applet.println(angle);
 		//applet.println(barrel);
+		applet.println(barrel.heading());
 	}
 
 	void shoot() {

@@ -18,13 +18,10 @@ public class Terrain {
 
 	void generate() {
 		heightmap = new int[tWidth];
-		heightmap[0] = (int) (offset * 2 + applet.random(tHeight * 0.25f));
-		heightmap[tWidth - 1] = (int) (offset * 2 + applet.random(tHeight * 0.25f));
-		heightmap = new int[tWidth];
 		// left terrain point
-		heightmap[0] = (int) applet.random(tHeight);
+		heightmap[0] = (int) (offset * 2 + applet.random(tHeight * 0.25f));
 		// right terrain point
-		heightmap[tWidth - 1] = (int) applet.random(tHeight);
+		heightmap[tWidth - 1] = (int) (offset * 2 + applet.random(tHeight * 0.25f));
 		// make a queue
 		Queue<Integer> q = new LinkedList<Integer>();
 
@@ -42,7 +39,7 @@ public class Terrain {
 			int x1 = q.remove();
 			// the x-coord for mid point is avearge of the two points
 			int mid = (x0 + x1) / 2;
-			//hej
+			// hej
 			heightmap[mid] = (int) ((heightmap[x0] + heightmap[x1]) / 2 + applet.random(-offset, offset));
 			// set roughness value to that which was first in queue and remove that which it
 			// was set to from the queue (offset)
@@ -65,16 +62,15 @@ public class Terrain {
 		}
 	}
 
-	void displayTerrain()
-	{
-		applet.fill(27, 139, 61);//dark green
+	void displayTerrain() {
+		applet.fill(27, 139, 61);// dark green
 		applet.beginShape();
-		applet.vertex(0, applet.height);//bottom left
-		//loop through heightmap and setting vertex at each point
-		for(int i = 0; i < heightmap.length-1; i++){
-			applet.vertex(i, heightmap[i]);	
+		applet.vertex(0, applet.height);// bottom left
+		// loop through heightmap and setting vertex at each point
+		for (int i = 0; i < heightmap.length - 1; i++) {
+			applet.vertex(i, heightmap[i]);
 		}
-		applet.vertex(applet.width, applet.height);//bottom right
+		applet.vertex(applet.width, applet.height);// bottom right
 		applet.endShape(2);
 	}
 
