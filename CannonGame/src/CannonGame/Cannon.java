@@ -10,8 +10,8 @@ public class Cannon {
 	PVector barrel;
 
 	PVector position;
-	float angleVelocity;
-	float angle;
+	float barrelAngleVelocity;
+	float barrelAngle;
 	float movementSpeed;
 	float barrelLength;
 	float barrelWidth;
@@ -19,14 +19,15 @@ public class Cannon {
 	float wheelCount;
 	float a;
 	ArrayList<SquareBall> squareBalls;
+	float tankAngle;
 
 	Cannon(PVector position) {
 		this.wheelCount = 5;
 		this.wheelRadius = 30f;
 		this.barrelWidth = 20f;
 		this.position = position;
-		this.angle = angle;
-		this.angleVelocity = -PConstants.PI / 180;
+		this.barrelAngle = barrelAngle;
+		this.barrelAngleVelocity = -PConstants.PI / 180;
 		this.movementSpeed = 5f;
 		this.barrelLength = 100f;
 		this.barrel = new PVector(100, 0);
@@ -44,14 +45,14 @@ public class Cannon {
 		}
 	}
 
-	// moving the cannon and barrel
+	// moving the tank and barrel
 	void move() {
 
 	}
 
-	// drawing the cannon - i.e the barrel, wheels and maybe some extra
+	// drawing the tank - i.e the barrel, wheels and maybe some extra
 	void show() {
-		angle += angleVelocity;
+		barrelAngle += barrelAngleVelocity;
 		applet.pushMatrix();
 		
 		// make tank small
@@ -59,15 +60,16 @@ public class Cannon {
 		//Translates the center of the grid to position of tank
 		applet.translate(position.x, position.y - 30);
 		// Rotates tank in its entirety including barrel
-		applet.rotate(angle);
+		applet.rotate(barrelAngle);
 		applet.line(0, 0, barrel.x, barrel.y);
 		//rotates PVector describing direction of barrel
-		barrel.rotate(angleVelocity);
+		barrel.rotate(barrelAngleVelocity);
 		// for-loop draws wheels of tank
 		for (int i = 0; i < wheelCount; i++) {
 			applet.ellipse(wheelRadius * 2 * i - 4 * wheelRadius, 55 + wheelRadius, wheelRadius * 2, wheelRadius * 2);
 		}
 		//The vertices draw the shape of the tank
+		applet.fill(125);
 		applet.beginShape();
 		applet.vertex(-5 * wheelRadius, 55 + wheelRadius);
 		applet.vertex(5 * wheelRadius, 55 + wheelRadius);
@@ -88,7 +90,7 @@ public class Cannon {
 
 	void shoot() {
 		applet.println("shoot");
-		squareBalls.add(new SquareBall(PVector.add(position, barrel), 10, angle, 0, 1, 20));
+		squareBalls.add(new SquareBall(PVector.add(position, barrel), 10,barrelAngle, 0, 1, 20));
 	}
 
 	float getAngleFromTerrain(Terrain terrain)
