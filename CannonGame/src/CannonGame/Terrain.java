@@ -18,14 +18,11 @@ public class Terrain {
 
 	void generate() {
 		heightmap = new int[tWidth];
-		heightmap[0] = (int) (offset * 2 + applet.random(tHeight * 0.25f));
+		//left terrainpoint y-coordinate
+		heightmap[0] = (int) (offset * 2 + applet.random(tHeight * 0.5f));
+		//right terrainpoint y-coordiante
 		heightmap[tWidth - 1] = (int) (offset * 2 + applet.random(tHeight * 0.25f));
-		heightmap = new int[tWidth];
-		// left terrain point
-		heightmap[0] = (int) applet.random(tHeight);
-		// right terrain point
-		heightmap[tWidth - 1] = (int) applet.random(tHeight);
-		// make a queue
+		
 		Queue<Integer> q = new LinkedList<Integer>();
 
 		// add first segment (left and right x terrain point)
