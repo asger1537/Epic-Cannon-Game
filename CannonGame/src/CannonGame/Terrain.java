@@ -20,14 +20,14 @@ Terrain()
 void generate()
 {
 	int[] heightmap = new int[tWidth]; 
-	// left terrain point 
+	// left terrain point y-coord
 	heightmap[0]= (int)applet.random(tHeight);
-	// right terrain point 
+	// right terrain point y-coord
 	heightmap[tWidth-1]= (int)applet.random(tHeight);
 	// make a queue
 	Queue<Integer> q = new LinkedList<>();
 
-// add first segment (left and right x terrain point)	
+// add first segment (left and right terrain point x-coord)	
 q.add(0);
 q.add(tWidth-1);
 //generates terrain until distance between points is not divisable by 2
@@ -59,7 +59,7 @@ void displayTerrain()
 	//loop through length of array
 for(int i = 0; i < tWidth-1; i++)
 	{
-	//the vertical line from the botoom of the screen to the current terrain point
+	//the vertical line from the bottom of the screen to the current terrain point
 	applet.line(i,applet.height,i,heightmap[i]);
 	//the line from current terrain point to the next terrain point
 	applet.line(i, heightmap[i],i+1, heightmap[i+1]);	
