@@ -89,7 +89,6 @@ public class Terrain {
 		int maxX = (int) Math.ceil(midX + diameter / 2);
 
 		for (int x = minX; x <= maxX; ++x) {
-			// skip if x outside screen
 			if (x < 0 || x >= heightmap.length)
 				continue;
 			int y = heightmap[x];
