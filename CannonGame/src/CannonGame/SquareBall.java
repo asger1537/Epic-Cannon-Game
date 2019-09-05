@@ -47,6 +47,7 @@ public class SquareBall {
     }
 
     public void move() {
+        if (velocity.mag() <= 0.05f) return;
         velocity.add(acceleration);
         position.add(velocity);
         acceleration = new PVector();
@@ -136,13 +137,16 @@ public class SquareBall {
     }
 
     public void checkTerrainCollision() {
+
+        if (velocity.mag() == 0) return;
+
         int terrainCollisions = 0;
 
         float velocityMultiplier = 0.5f;
 
         for (PVector c : corners) {
             // if the corner is below the terrain line
-            if (c.x > 0 && c.x < applet.width && c.y >= applet.terrain.heightmap[(int) c.x]) {
+            if (c.x > 0 && c.x < applet.width && c.y >= applet.terrain.heightmap[(int) Math.round(c.x)]) {
                 terrainCollisions++;
                 applet.println(terrainCollisions);
                 //if only one corner 
@@ -157,7 +161,12 @@ public class SquareBall {
 
                     aVelocity += (c.x - position.x) / 50f;
                     aVelocity *= -0.5;
-                    velocity.mult(velocityMultiplier);                   
+                    velocity.mult(velocityMultiplier);      
+                    if (velocity.mag() < 0.2f)
+                    {
+                        velocity.setMag(0);
+                        aVelocity = 0;
+                    }             
                 }
             }
         }
