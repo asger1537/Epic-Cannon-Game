@@ -73,6 +73,4 @@ public class Terrain {
 		applet.vertex(applet.width, applet.height);// bottom right
 		applet.endShape(2);
 	}
-
-	
 }
