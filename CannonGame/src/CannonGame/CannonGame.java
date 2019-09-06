@@ -1,8 +1,6 @@
 package CannonGame;
 
 import processing.core.*;
-//import processing.awt.*;
-
 
 public class CannonGame extends PApplet{
 	public static CannonGame applet;
@@ -13,6 +11,7 @@ public class CannonGame extends PApplet{
 	Button[] buttons;
 	int scene;
 	Terrain terrain;
+	PImage tankImg;
 	public static void main(String[] args) {
 		PApplet.main("CannonGame.CannonGame");
 	}
@@ -36,6 +35,8 @@ public class CannonGame extends PApplet{
 		scene = 0;
 		terrain = new Terrain();
 		terrain.generate();
+		tankImg = loadImage("C:\\Users\\Bruger\\git\\Epic-Cannon-Game\\CannonGame\\src\\CannonGame\\data/tankBaseAlpha.png");
+		println(tankImg);
 	}
 	
 	//called every frame
@@ -47,7 +48,7 @@ public class CannonGame extends PApplet{
 		//b.applyForce(wind);
 		b.applyForce(gravity);
 		terrain.displayTerrain();
-		
+		//image(tankImg, 300, 100);
 	}
 
 	@Override

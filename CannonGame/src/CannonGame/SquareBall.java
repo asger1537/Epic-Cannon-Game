@@ -1,6 +1,5 @@
 package CannonGame;
 
-import processing.core.PConstants;
 import processing.core.PVector;
 import static CannonGame.CannonGame.applet;
 
@@ -47,7 +46,8 @@ public class SquareBall {
     }
 
     public void move() {
-        if (velocity.mag() <= 0.05f) return;
+        if (velocity.mag() <= 0.05f)
+            return;
         velocity.add(acceleration);
         position.add(velocity);
         acceleration = new PVector();
@@ -58,7 +58,7 @@ public class SquareBall {
     }
 
     void applyAirResistance() {
-        // applies a portion of the velocity as a force in the opposite direction
+        // Applies a portion of the velocity as a force in the opposite direction
         this.applyForce(PVector.div(velocity, -200));
     }
 
@@ -81,16 +81,57 @@ public class SquareBall {
         applet.endShape(2);
     }
 
+    public void checkTerrainCollision() {
+        // no need the check collision if the squareBall isn't moving
+        if (velocity.mag() == 0)
+            return;
+
+        int terrainCollisions = 0;
+        float velocityMultiplier = 0.5f;
+
+        for (PVector c : corners) {
+            // If the corner is below the terrain line
+            if (c.x > 0 && c.x < applet.width && c.y >= applet.terrain.heightmap[(int) Math.round(c.x)]) {
+                terrainCollisions++;
+                // If the squareBall is moving fast more than one corner might collide
+                // In that case only one of the corners need to do the collision physics
+                if (terrainCollisions == 1) {
+                    // Moving the squareBall up by the y-distance it overstepped the terrain
+                    position.y -= c.y - applet.terrain.heightmap[(int) c.x];
+                    // Reflection
+                    float terrainHeading = new PVector(3,
+                            applet.terrain.heightmap[(int) c.x + 1] - applet.terrain.heightmap[(int) c.x - 1])
+                                    .heading();
+
+                    velocity.rotate(-terrainHeading);
+                    velocity.y *= -1;
+                    velocity.rotate(terrainHeading);
+
+                    // Making sure the squareBall doesn't balance on 1 corner
+                    aVelocity += (c.x - position.x) / 50f;
+                    // Reversing the rotation direction and losing angularvelocity
+                    aVelocity *= -0.5;
+                    velocity.mult(velocityMultiplier);
+                    // Sets velocity to 0 if the velocity is low to prevent jitter
+                    if (velocity.mag() < 0.2f) {
+                        velocity.setMag(0);
+                        aVelocity = 0;
+                    }
+                }
+            }
+        }
+    }
+
     public void checkEdgeCollision() {
         int xCollisions = 0;
         int yCollisions = 0;
 
+        // makes the ball decellerate on collision
         float velocityMultiplier = 0.5f;
         // checks collision with window borders for each corner
         for (PVector c : corners) {
             // collision with right edge of the window
             if (c.x > applet.width) {
-                applet.println("right collision");
                 xCollisions++;
                 if (xCollisions == 1) {
                     position.x -= c.x - applet.width;
@@ -101,7 +142,6 @@ public class SquareBall {
             // collision with right edge of the window
             if (c.x < 0) {
                 xCollisions++;
-                applet.println("left collision");
                 if (xCollisions == 1) {
                     position.x -= c.x;
                     velocity.x *= -velocityMultiplier;
@@ -111,7 +151,6 @@ public class SquareBall {
             // collision with the bottom of the window
             if (c.y >= applet.height) {
                 yCollisions++;
-                // applet.println("bottom collision");
                 if (yCollisions == 1) {
                     position.y -= c.y - applet.width;
                     velocity.y *= -velocityMultiplier;
@@ -122,51 +161,12 @@ public class SquareBall {
             }
             // collision with the top of the window
             if (c.y < 0) {
-                applet.println("top collision");
                 if (yCollisions == 1) {
                     yCollisions++;
                     position.y -= c.y;
                     velocity.y *= -velocityMultiplier;
                     aVelocity *= -1;
                     velocity.x *= 0.5;
-                }
-            }
-            // applet.println(pPosition.y == position.y);
-            // applet.println(position.x, position.y);
-        }
-    }
-
-    public void checkTerrainCollision() {
-
-        if (velocity.mag() == 0) return;
-
-        int terrainCollisions = 0;
-
-        float velocityMultiplier = 0.5f;
-
-        for (PVector c : corners) {
-            // if the corner is below the terrain line
-            if (c.x > 0 && c.x < applet.width && c.y >= applet.terrain.heightmap[(int) Math.round(c.x)]) {
-                terrainCollisions++;
-                applet.println(terrainCollisions);
-                //if only one corner 
-                if (terrainCollisions == 1) {
-                    position.y -= c.y - applet.terrain.heightmap[(int)c.x];
-                    float terrainHeading = new PVector(3,
-                            applet.terrain.heightmap[(int) c.x + 1] - applet.terrain.heightmap[(int) c.x - 1]).heading();
-
-                    velocity.rotate(-terrainHeading);
-                    velocity.y *= -1;
-                    velocity.rotate(terrainHeading);
-
-                    aVelocity += (c.x - position.x) / 50f;
-                    aVelocity *= -0.5;
-                    velocity.mult(velocityMultiplier);      
-                    if (velocity.mag() < 0.2f)
-                    {
-                        velocity.setMag(0);
-                        aVelocity = 0;
-                    }             
                 }
             }
         }
