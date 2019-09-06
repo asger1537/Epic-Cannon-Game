@@ -83,4 +83,29 @@ public class Tank {
 				barrelDirection.heading(), 0, 1, 20));
 	}
 
+	float getTankSlope()
+	{
+		float tankSlopeMax = -1000;
+
+		for(int i = 0; i < collisionPoint2.x-collisionPoint1.x; ++i)
+		{
+			//terrain x-coord for tank collisionpoint1
+			int x1 = (int) Math.round(collisionPoint1.x);
+			// terrain x-coord for increments of i
+			int x2 = (int) Math.round(collisionPoint1.x+i);
+			
+			//terrain y-coord for tank collisionpoint1
+			int y1 =	applet.terrain.heightmap[x1];
+			// terrain y-coord for increments of i
+			int y2 = 	applet.terrain.heightmap[x2];
+			
+			float tankSlope =  (y2-y1)/(x2-x1);
+
+			if(tankSlope > tankSlopeMax){tankSlopeMax = tankSlope;}
+		}
+		
+		return tankSlopeMax;
+	}	
+
+
 }
