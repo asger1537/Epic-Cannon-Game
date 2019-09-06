@@ -5,7 +5,7 @@ import processing.core.*;
 public class CannonGame extends PApplet{
 	public static CannonGame applet;
 	SquareBall b;
-	public Cannon c;
+	public Tank t;
 	PVector wind;
 	PVector gravity;
 	Button[] buttons;
@@ -27,7 +27,7 @@ public class CannonGame extends PApplet{
 	//initialize things
 	public void setup() {
 		frameRate(60);
-		c = new Cannon(new PVector(width/2f,height/2f));
+		t = new Tank(new PVector(width/2f,height/2f));
 		b = new SquareBall(new PVector(width/2, height/2), 5, random(PI * 2), PI/20, 1f, 25 );
 		wind = new PVector(0.05f, 0);
 		gravity = new PVector(0, 0.98f);
@@ -35,7 +35,7 @@ public class CannonGame extends PApplet{
 		scene = 0;
 		terrain = new Terrain();
 		terrain.generate();
-		tankImg = loadImage("C:\\Users\\Bruger\\git\\Epic-Cannon-Game\\CannonGame\\src\\CannonGame\\data/tankBaseAlpha.png");
+		tankImg = loadImage("https://i.imgur.com/FeiiJ3W.png");
 		println(tankImg);
 	}
 	
@@ -43,7 +43,7 @@ public class CannonGame extends PApplet{
 	public void draw() {
 		//System.out.println(frameRate);
 		background(202, 236, 244);
-		c.update();
+		t.update();
 		b.update();
 		//b.applyForce(wind);
 		b.applyForce(gravity);
