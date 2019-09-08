@@ -15,6 +15,13 @@ public class Input {
         if (applet.key == 's') {
             applet.t.barrelDirection.rotate(applet.PI / 60);
         }
+        if (applet.key == 'a'){
+            applet.t.move(-1);
+        }
+        if (applet.key == 'd'){
+            applet.t.move(1);
+        }
+
     }
 
     public static void mouseClicked() {

@@ -12,7 +12,7 @@ public class Tank {
 	float barrelLength;
 	PVector barrelPosition;
 	PVector barrelDirection;
-	PVector velocity;
+	float moveSpeed;
 	ArrayList <SquareBall> squareBalls;
 
 	Tank(PVector position) {
@@ -25,13 +25,12 @@ public class Tank {
 		barrelLength = 80;
 		barrelPosition = new PVector(barrelLength, 0);
 		barrelDirection = new PVector(1, 0);
-		velocity = new PVector();
+		moveSpeed = 5f;
 		squareBalls = new ArrayList<>();
 	}
 
 	void update() {
 		show();
-		move();
 		updateCollisionPoints();
 		for (int i = 0; i < squareBalls.size(); i++){
             SquareBall sb = squareBalls.get(i);
@@ -40,8 +39,10 @@ public class Tank {
         }
 	}
 
-	void move() {
-		position.add(velocity);
+	void move(int d) {
+		applet.println(getTankAngle());
+		position.x += moveSpeed*d;
+		position.y = applet.terrain.heightmap[(int)position.x]-applet.sin(getTankAngle())*16f;	
 	}
 
 	void updateCollisionPoints() {
