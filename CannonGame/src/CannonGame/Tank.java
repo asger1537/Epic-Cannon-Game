@@ -1,5 +1,6 @@
 package CannonGame;
 
+import java.io.Console;
 import java.util.ArrayList;
 
 import processing.core.PVector;
@@ -72,7 +73,7 @@ public class Tank {
 		applet.imageMode(3);
 		applet.pushMatrix();
 		applet.translate(position.x, position.y);
-		applet.rotate(direction.heading());
+		applet.rotate(getTankAngle());
 		applet.image(applet.tankImg, 0, 0);
 		applet.popMatrix();
 	}
@@ -83,28 +84,35 @@ public class Tank {
 				barrelDirection.heading(), 0, 1, 20));
 	}
 
-	float getTankSlope()
+	float getTankAngle()
 	{
 		float tankSlopeMax = -1000;
+		
+		float width = Math.abs(collisionPoint1.x-collisionPoint2.x);
 
-		for(int i = 0; i < collisionPoint2.x-collisionPoint1.x; ++i)
+		//terrain x-coord for tank left most collisionpoint
+		int x1 = (int) Math.floor(Math.min(collisionPoint1.x, collisionPoint2.x));
+		//terrain y-coord for tank left most collisionpoint
+		int y1 =	applet.terrain.heightmap[x1];
+
+		for(int i = 0; i < width; ++i)
 		{
-			//terrain x-coord for tank collisionpoint1
-			int x1 = (int) Math.round(collisionPoint1.x);
 			// terrain x-coord for increments of i
-			int x2 = (int) Math.round(collisionPoint1.x+i);
+			int x2 = x1+i;
 			
-			//terrain y-coord for tank collisionpoint1
-			int y1 =	applet.terrain.heightmap[x1];
 			// terrain y-coord for increments of i
-			int y2 = 	applet.terrain.heightmap[x2];
+			int y2 = applet.terrain.heightmap[x2];
 			
-			float tankSlope =  (y2-y1)/(x2-x1);
+			//cast i to float to avoid rounding
+			float tankSlope =  (y2-y1)/(float)i;
 
+			// ensures max slope is highest slope
 			if(tankSlope > tankSlopeMax){tankSlopeMax = tankSlope;}
 		}
-		
-		return tankSlopeMax;
+		PVector slopeVector = new PVector(1,tankSlopeMax);
+		// gets the tank angle
+		float tankAngle = (float)Math.atan2(slopeVector.y,slopeVector.x);
+		return tankAngle;
 	}	
 
 
