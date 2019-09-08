@@ -85,9 +85,6 @@ public class Tank {
 		applet.rotate(angle);
 		applet.image(applet.tankImg, 0, 0);
 		applet.popMatrix();
-		applet.fill(255,0,0);
-		applet.ellipse(collisionPoint1.x, collisionPoint1.y, 10, 10);
-		applet.ellipse(collisionPoint2.x, collisionPoint2.y, 10, 10);
 	}
 
 	void shoot() {
