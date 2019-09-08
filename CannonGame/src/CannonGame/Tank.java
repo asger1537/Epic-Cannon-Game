@@ -42,7 +42,7 @@ public class Tank {
 	void move(int d) {
 		applet.println(getTankAngle());
 		position.x += moveSpeed*d;
-		position.y = applet.terrain.heightmap[(int)position.x]-applet.sin(getTankAngle())*16f;	
+		position.y = applet.terrain.heightmap[(int)position.x]; 	
 	}
 
 	void updateCollisionPoints() {
@@ -57,6 +57,11 @@ public class Tank {
 		PVector barrelBase = new PVector(position.x, position.y - yOffSet);
 		float barrelRadius = 5;
 
+		// calculate offset to compensate image being rotated around the wrong corner
+		float angle = getTankAngle();
+		float yaoffset = (float)(Math.sin(angle)*-16f)+16;
+		float xaoffset = (float)(Math.cos(-angle)*16f)-16;
+
 		applet.fill(0);
 		// drawing the barrel
 		applet.beginShape();
@@ -64,19 +69,25 @@ public class Tank {
 		PVector v2 = PVector.add(barrelBase, new PVector(barrelDirection.y, -barrelDirection.x).mult(barrelRadius));
 		PVector v3 = PVector.add(v2, PVector.mult(barrelDirection, barrelLength));
 		PVector v4 = PVector.add(v1, PVector.mult(barrelDirection, barrelLength));
+		applet.pushMatrix();
+		applet.translate(-xaoffset, -yaoffset);
 		applet.vertex(v1.x, v1.y);
 		applet.vertex(v2.x, v2.y);
 		applet.vertex(v3.x, v3.y);
 		applet.vertex(v4.x, v4.y);
 		applet.endShape(2);
+		applet.popMatrix();
 
 		// drawing the tank body
 		applet.imageMode(3);
 		applet.pushMatrix();
-		applet.translate(position.x, position.y);
-		applet.rotate(getTankAngle());
+		applet.translate(position.x-xaoffset, position.y-yaoffset);
+		applet.rotate(angle);
 		applet.image(applet.tankImg, 0, 0);
 		applet.popMatrix();
+		applet.fill(255,0,0);
+		applet.ellipse(collisionPoint1.x, collisionPoint1.y, 10, 10);
+		applet.ellipse(collisionPoint2.x, collisionPoint2.y, 10, 10);
 	}
 
 	void shoot() {
@@ -87,7 +98,7 @@ public class Tank {
 
 	float getTankAngle()
 	{
-		float tankSlopeMax = -1000;
+		float tankSlopeMax = 1000;
 		
 		float width = Math.abs(collisionPoint1.x-collisionPoint2.x);
 
@@ -108,7 +119,7 @@ public class Tank {
 			float tankSlope =  (y2-y1)/(float)i;
 
 			// ensures max slope is highest slope
-			if(tankSlope > tankSlopeMax){tankSlopeMax = tankSlope;}
+			if(tankSlope < tankSlopeMax){tankSlopeMax = tankSlope;}
 		}
 		PVector slopeVector = new PVector(1,tankSlopeMax);
 		// gets the tank angle
